@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="utf-8">
-		<title>Les Bonnes Pièces</title>
-		<link rel="stylesheet" href="styles.css">
-		<script type="module" src="scripts/pieces.js"></script>
-	</head>
-	<body>
-		<header>
-			<img src="images/logo-les-bonnes-pieces.png" alt="LOGO">
-			<h1>Les Bonnes Pièces</h1>
-		</header>
-		<main>
-			<!-- Menu de recherche -->
-			<section class="filtres">
-				<h3>Filtres</h3>
-				<button class="btn-trier">Trier par prix croissant</button>
-				<br>
-				<button class="btn-filtrer">Filtrer les pièces non abordables</button>
-				<button class="btn-description">Filtrer les pièces ayant une description</button>
-				<button class="btn-decroissant">Filtrer les prix par ordre décroissant</button>
-			</section>
 
-			<!-- Fiches produits -->
-			<section class="fiches">
-			</section>
-		</main>
-	</body>
+<head>
+	<meta charset="utf-8">
+	<title>Les Bonnes Pièces</title>
+	<link rel="stylesheet" href="styles.css">
+	<script type="module" src="scripts/pieces.js"></script>
+</head>
+
+<body>
+	<header>
+		<img src="images/logo-les-bonnes-pieces.png" alt="LOGO">
+		<h1>Les Bonnes Pièces</h1>
+	</header>
+	<main>
+		<!-- Menu de recherche -->
+		<section class="filtres">
+			<h3>Filtres</h3>
+			<button class="btn-trier">Trier par prix croissant</button><br>
+			<button class="btn-filtrer">Filtrer les pièces non abordables</button><br>
+			<button class="btn-description">Filtrer les pièces ayant une description</button><br>
+			<button class="btn-decroissant">Filtrer les prix par ordre décroissant</button><br><br>
+
+			<p>Prix maximum :</p>
+			<input type="range" id="prixMax" value="60" min="0" max="60" step="5">
+			
+		</section>
+
+		<!-- Affichage de filtres -->
+		<div class="abordables">
+			<p>Liste des pièces abordables :</p>
+		</div>
+		<div class="disponibles">
+			<p>Liste des pièces avec une description :</p>
+		</div><br>
+		<!-- Fiches produits -->
+		<section class="fiches">
+		</section>
+
+	</main>
+</body>
+
 </html>
