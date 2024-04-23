@@ -1,7 +1,21 @@
-import { ajoutListenersAvis } from "./avis.js";
+import { ajoutListenerEnvoyerAvis, ajoutListenersAvis, afficherAvis } from "./avis.js";
+let pieces = window.localStorage.getItem("pieces");
 
+if (pieces === null) {
 // Récupération des pièces depuis le fichier JSON
-const pieces = await fetch("pieces-autos.json").then(pieces => pieces.json());
+const reponse = await fetch("http://localhost:8081/pieces");
+pieces = await reponse.json();
+//Transformation des pièces en JSON
+const valeurPieces = JSON.stringify(pieces);
+//Stockage des informations dans le local storage
+window.localStorage.setItem("pieces", valeurPieces);
+} else {
+    pieces = JSON.parse(pieces);
+}
+
+//Appel de la fonction pour ajouter un avis
+ajoutListenerEnvoyerAvis();
+
 
 function genererPieces(pieces) {
     for (let i = 0; i < pieces.length; i++) {
@@ -37,6 +51,29 @@ function genererPieces(pieces) {
 }
 
 genererPieces(pieces);
+
+// Boucle sur chaque élément du tableau 'pieces'
+for (let i = 0; i < pieces.length; i++) {
+    // Récupère l'élément actuel du tableau 'pieces'
+    const piece = pieces[i];
+
+    // Récupère les avis du 'localStorage' pour l'élément actuel
+    // La clé est construite en concaténant "avis-piece-" avec l'ID de l'élément
+    const avisJSON = window.localStorage.getItem("avis-piece-" + piece.id);
+
+    // Convertit la chaîne JSON des avis en un objet JavaScript
+    const avis = JSON.parse(avisJSON);
+
+    // Vérifie si les avis sont null
+    if (avis === null) {
+        // Si les avis sont null, trouve l'élément 'article' correspondant à l'élément actuel
+        // L'élément est trouvé en utilisant un sélecteur d'attribut pour l'ID de l'élément
+        const pieceElement = document.querySelector(`article[data-id="${id}"]`);
+
+        // Appelle la fonction 'afficherAvis' avec l'élément 'article' et les avis
+        afficherAvis(pieceElement, avis);
+    } 
+}
 
 /** Tri et affichage des pièces
  *  Fonction trierEtAfficherPieces
@@ -132,4 +169,10 @@ document.querySelector('.disponibles')
         });
         document.querySelector(".fiches").innerHTML = "";
         genererPieces(piecesFiltrees);
+    });
+
+    //Ajout d'un listener pour mettre à jour des données du localStorage
+    const boutonMettreAJour = document.querySelector(".btn-maj");
+    boutonMettreAJour.addEventListener("click", function() {
+        window.localStorage.removeItem("pieces");
     });
